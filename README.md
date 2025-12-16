@@ -1,107 +1,106 @@
-# MedState - Wound Classification System
+# MindEd - Mental Wellness Dashboard
 
-A full-stack application for classifying wound images using machine learning.
+A real-time mental wellness monitoring dashboard that visualizes brainwave patterns and provides AI-powered insights for stress management and cognitive optimization.
+
+## Features
+
+- **Real-time Brainwave Visualization** - Interactive charts displaying Alpha, Beta, Theta, Delta, and Gamma wave patterns
+- **Mental State Analysis** - Dynamic assessment of focus, relaxation, stress, and creativity levels
+- **AI-Powered Assistant** - Conversational interface for personalized wellness guidance using Google Gemini 2.5 Flash
+- **Stress Monitoring** - Visual gauge with real-time stress level tracking
+- **Daily Trend Analysis** - Historical data visualization for pattern recognition
+- **Personalized Recommendations** - Context-aware suggestions for mental wellness improvement
+- **Accessibility Controls** - Customizable interface options for enhanced usability
+- **Multiple Viewing Modes** - Focus, Relax, Sleep, and Meditate modes with tailored visualizations
+
+## Tech Stack
+
+### Frontend
+- **React 18** with TypeScript for type-safe component development
+- **Vite** for fast build tooling and hot module replacement
+- **Tailwind CSS** for utility-first responsive styling
+- **shadcn/ui** for accessible, customizable UI components
+- **Recharts** for data visualization and interactive charts
+- **React Router DOM** for client-side routing
+- **TanStack React Query** for server state management
+- **React Hook Form + Zod** for form handling and validation
+
+### Backend
+- **Deno Edge Functions** for serverless API endpoints
+- **Google Gemini 2.5 Flash** for AI-powered chat functionality
+- **PostgreSQL** database with Row Level Security
+- **Real-time subscriptions** for live data updates
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd mindease
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Set up environment variables
+```bash
+# Create .env file with the following variables
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
+```
+
+4. Start the development server
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:5173](http://localhost:5173) in your browser
 
 ## Project Structure
 
 ```
-MedState/
-├── backend/          # Flask API & ML Model
-│   ├── app.py       # Flask web server
-│   ├── train_model.py      # Model training script
-│   ├── evaluate_model.py   # Model evaluation script
-│   ├── requirements.txt   # Python dependencies
-│   ├── templates/   # Flask HTML templates (demo)
-│   └── uploads/     # Temporary image uploads
-│
-├── frontend/        # React frontend (from lovable/woundcare-ai)
-│   ├── src/        # React source code
-│   ├── public/     # Static assets
-│   └── package.json
-│
-└── Wound_dataset/   # Training dataset (not tracked in git)
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui base components
+│   ├── BrainwaveChart.tsx
+│   ├── DailyTrendChart.tsx
+│   ├── MentalStateCard.tsx
+│   ├── StressGauge.tsx
+│   └── ...
+├── pages/              # Route pages
+│   ├── Index.tsx       # Landing page
+│   ├── Dashboard.tsx   # Main dashboard
+│   └── Assistant.tsx   # AI chat interface
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── integrations/       # External service integrations
+
+supabase/
+└── functions/          # Edge functions
+    └── chat/           # AI chat endpoint
 ```
 
-## Quick Start
+## Available Scripts
 
-### Backend (ML API)
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-**Option 1: Using helper scripts (Recommended)**
-```bash
-cd backend
-./train_model.sh    # Train the model (first time only)
-./run_backend.sh    # Start the Flask server
-```
+## Environment Variables
 
-**Option 2: Manual setup**
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python3 train_model.py    # Train the model (first time only)
-python3 app.py            # Run the server
-```
+| Variable | Description |
+|----------|-------------|
+| `VITE_SUPABASE_URL` | Backend API URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Public API key |
+| `GEMINI_API_KEY` | (Optional) Google Gemini API key for local development |
 
-Server runs on `http://localhost:5001`
 
-### Frontend (React App)
-
-**Option 1: Using helper script (Recommended)**
-```bash
-cd frontend
-./run_frontend.sh
-```
-
-**Option 2: Manual setup**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend will be available at `http://localhost:5173` (or next available port)
-
-## Updating Frontend from Lovable
-
-To pull the latest frontend code from the `lovable` remote:
-
-```bash
-./update_frontend.sh
-```
-
-Or manually:
-```bash
-cd frontend
-git fetch lovable
-git checkout lovable/main -- .
-```
-
-## Backend API Endpoints
-
-- `GET /` - Demo page
-- `POST /predict` - Upload image and get classification
-- `GET /health` - Health check and model status
-
-## Development Workflow
-
-1. **Modify backend:** Edit files in `backend/`
-2. **Update frontend:** Pull from `lovable` remote when needed
-3. **Connect them:** Frontend should call backend API at `http://localhost:5001`
-
-## Deployment
-
-### Railway (Recommended - Full Stack)
-Deploy both backend and frontend together on Railway:
-- See `docs/RAILWAY_DEPLOY.md` for step-by-step instructions
-- Free $5 credit/month, then pay-as-you-go
-- Automatic deployments from GitHub
-
-### Other Options
-See `docs/FULL_STACK_HOSTING.md` for alternative platforms (Render, Fly.io, etc.)
-
-## Notes
-
-- Model files (`.joblib`, `.pkl`) are gitignored - train locally
-- Dataset (`Wound_dataset/`) is gitignored due to size
-- Frontend is maintained separately in the `lovable` remote
